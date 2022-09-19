@@ -1,7 +1,7 @@
 # Function Pattern
 # Context
 # Solution
-```
+```c
 llvm::Function* create_function(std::string name, std::vector<std::string> argNames, std::vector<llvm::Type*> argTypes, llvm::Type* retType) {
 	llvm::Function* func = llvm::Function::Create(  
 		llvm::FunctionType::get(retType, argTypes, false), 
