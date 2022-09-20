@@ -1,6 +1,5 @@
 ---
 title: "function pattern"
-parmalink: /function
 layout: default
 ---
 # Function Pattern

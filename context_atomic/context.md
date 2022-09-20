@@ -1,6 +1,5 @@
 ---
 title: "context"
-parmalink: /context
 layout: default
 ---
 # Context and Module Pattern
