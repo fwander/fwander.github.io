@@ -27,9 +27,9 @@ llvm::Function* create_function(std::string name, std::vector<std::string> argNa
 	return func;
 }
 
-template<typename Func>
-llvm::PHINode* create_if_else(llvm::Function* func, llvm::Type* blockType, Func cmp_code, Func if_code, Func else_code) {
-	llvm::Value* cmp = cmp_code();
+template<typename cFunc, typename iFunc, typename eFunc>
+llvm::PHINode* create_if_else(llvm::Function* func, llvm::Type* blockType, cFunc cmp_code, iFunc if_code, eFunc else_code) {
+	llvm::Value* cmp = cmp_code(func, blockType);
 	llvm::BasicBlock* ifBlock = llvm::BasicBlock::Create(context, "if", func);
 	llvm::BasicBlock* elseBlock = llvm::BasicBlock::Create(context, "else", func);
 	llvm::BasicBlock* together = llvm::BasicBlock::Create(context, "together", func);
@@ -37,11 +37,11 @@ llvm::PHINode* create_if_else(llvm::Function* func, llvm::Type* blockType, Func 
 	builder.CreateCondBr(cmp, ifBlock, elseBlock);
 
 	builder.SetInsertPoint(ifBlock);
-	llvm::Value* ifV = if_code();
+	llvm::Value* ifV = if_code(func, blockType);
 	builder.CreateBr(together);
 
 	builder.SetInsertPoint(elseBlock);
-	llvm::Value* elseV = else_code();
+	llvm::Value* elseV = else_code(func, blockType);
 	builder.CreateBr(together);
 	llvm::PHINode *PN = Builder.CreatePHI(blockType, 2, "iftmp");
 
@@ -55,17 +55,17 @@ llvm::PHINode* create_if_else(llvm::Function* func, llvm::Type* blockType, Func 
 int main(int argc, char *argv[]) {
 	auto fn = create_function<>("fib", {"a"}, {builder.getInt32Ty()}, builder.getInt32Ty(), 
 		[](llvm::Function* func, llvm::Type* blockType) {
-			create_if_else<>(func, blockType,
-				[](){
-
+			return create_if_else<>(func, blockType,
+				[](llvm::Function* func, llvm::Type* blockType){
+					return builder.getInt32(0);
 				},
-				[](){
-
+				[](llvm::Function* func, llvm::Type* blockType){
+					return builder.getInt32(0);
 				},
-				[](){
-
+				[](llvm::Function* func, llvm::Type* blockType){
+					return builder.getInt32(1);
 				}
-			)
+			);
 		}
 	);
 
