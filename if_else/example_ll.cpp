@@ -9,7 +9,8 @@ static llvm::LLVMContext context;
 static llvm::Module *module= new llvm::Module("llvm design patterns", context);
 static llvm::IRBuilder<> builder(context);
 
-llvm::Function* create_function(std::string name, std::vector<std::string> argNames, std::vector<llvm::Type*> argTypes, llvm::Type* retType) {
+template<typename Func>
+llvm::Function* create_function(std::string name, std::vector<std::string> argNames, std::vector<llvm::Type*> argTypes, llvm::Type* retType, Func body) {
 	llvm::Function* func = llvm::Function::Create(  
 		llvm::FunctionType::get(retType, argTypes, false), 
 		llvm::Function::ExternalLinkage, 
@@ -21,29 +22,52 @@ llvm::Function* create_function(std::string name, std::vector<std::string> argNa
 	}
 	llvm::BasicBlock* entryPoint = llvm::BasicBlock::Create(context, "entry", func); 
 	builder.SetInsertPoint(entryPoint); 
-	//function body goes here
-	//builder.CreateRet(); 
+	llvm::Value* ret = body(func, retType);
+	builder.CreateRet(ret)
 	return func;
 }
 
-void create_if_else(llvm::Function* func, llvm::Value* cmp) {
-
+template<typename Func>
+llvm::PHINode* create_if_else(llvm::Function* func, llvm::Type* blockType, Func cmp_code, Func if_code, Func else_code) {
+	llvm::Value* cmp = cmp_code();
 	llvm::BasicBlock* ifBlock = llvm::BasicBlock::Create(context, "if", func);
 	llvm::BasicBlock* elseBlock = llvm::BasicBlock::Create(context, "else", func);
+	llvm::BasicBlock* together = llvm::BasicBlock::Create(context, "together", func);
 
 	builder.CreateCondBr(cmp, ifBlock, elseBlock);
 
 	builder.SetInsertPoint(ifBlock);
-	//if block logic goes here
+	llvm::Value* ifV = if_code();
+	builder.CreateBr(together);
 
 	builder.SetInsertPoint(elseBlock);
-	//else block logic goes here
+	llvm::Value* elseV = else_code();
+	builder.CreateBr(together);
+	llvm::PHINode *PN = Builder.CreatePHI(blockType, 2, "iftmp");
+
+	PN->addIncoming(ifV, ifBlock);
+	PN->addIncoming(elseV, elseBlock);
+
+	builder.SetInsertPoint(together);
 
 }
 
 int main(int argc, char *argv[]) {
-	auto fn = create_function("fib", {"a"}, {builder.getInt32Ty()}, builder.getInt32Ty());
-	create_if_else(fn);
+	auto fn = create_function<>("fib", {"a"}, {builder.getInt32Ty()}, builder.getInt32Ty(), 
+		[](llvm::Function* func, llvm::Type* blockType) {
+			create_if_else<>(func, blockType,
+				[](){
+
+				},
+				[](){
+
+				},
+				[](){
+
+				}
+			)
+		}
+	);
 
 	std::string s;
 	llvm::raw_string_ostream os {s};
