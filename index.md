@@ -1,6 +1,6 @@
 ---
 title: "Hello"
-parmalink: /if_else
+parmalink: /
 layout: default
 ---
 # Hello World !

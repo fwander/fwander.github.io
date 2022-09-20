@@ -1,6 +1,6 @@
 ---
 title: "function pattern"
-parmalink: /if_else
+parmalink: /function
 layout: default
 ---
 # Function Pattern
