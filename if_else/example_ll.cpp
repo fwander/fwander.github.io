@@ -49,6 +49,8 @@ llvm::PHINode* create_if_else(llvm::Function* func, llvm::Type* blockType, cFunc
 	PN->addIncoming(elseV, elseBlock);
 
 	builder.SetInsertPoint(together);
+	builder.CreateRet(PN);
+	return PN;
 
 }
 

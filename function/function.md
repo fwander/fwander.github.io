@@ -5,6 +5,10 @@ layout: default
 ---
 # Function Pattern
 # Context
+This Pattern requires:
+* Context Pattern
+* Type Pattern
+* Basic Block Pattern
 # Solution
 ```c
 llvm::Function* create_function(std::string name, std::vector<std::string> argNames, std::vector<llvm::Type*> argTypes, llvm::Type* retType) {

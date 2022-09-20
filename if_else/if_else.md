@@ -5,6 +5,9 @@ layout: default
 ---
 # If Else Pattern
 # Context
+This Pattern requires:
+* Context Pattern
+* Basic Block Pattern
 # Solution
 ```c
 void create_if_else(llvm::Function* func, llvm::Value* cmp) {
