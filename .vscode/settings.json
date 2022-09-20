@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "array": "c",
-        "tuple": "c",
-        "utility": "c",
-        "*.tcc": "cpp",
-        "istream": "cpp"
-    }
-}
