@@ -9,7 +9,9 @@ This Pattern requires:
 * Type Pattern
 * Basic Block Pattern
 # Solution
-```cpp
+
+```
+cpp
 llvm::Function* create_function(std::string name, std::vector<std::string> argNames, std::vector<llvm::Type*> argTypes, llvm::Type* retType) {
 	llvm::Function* func = llvm::Function::Create(  
 		llvm::FunctionType::get(retType, argTypes, false), 
@@ -27,9 +29,13 @@ llvm::Function* create_function(std::string name, std::vector<std::string> argNa
 	return func;
 }
 ```
+
 # Example
 # Variations
-```cpp
+
+```
+cpp
+
 template<typename Func>
 llvm::Function* create_function(std::string name, std::vector<std::string> argNames, std::vector<llvm::Type*> argTypes, llvm::Type* retType, Func body) {
 	llvm::Function* func = llvm::Function::Create(  
@@ -48,5 +54,6 @@ llvm::Function* create_function(std::string name, std::vector<std::string> argNa
 	return func;
 }
 ```
+
 # Related patterns
 # References
