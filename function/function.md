@@ -19,7 +19,7 @@ llvm::Function* create_function(std::string name, std::vector<std::string> argNa
 		name,
 		module
 	);
-	for (unsigned i; i < func->arg_size(); i = 0){
+	for (unsigned i; i < func->arg_size(); i++){
 		func->getArg(i)->setName(argNames[i]);
 	}
 	llvm::BasicBlock* entryPoint = llvm::BasicBlock::Create(context, "entry", func); 
