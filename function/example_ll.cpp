@@ -16,13 +16,14 @@ llvm::Function* create_function(std::string name, std::vector<std::string> argNa
 		name,
 		module
 	);
-	for (unsigned i; i < func->arg_size(); i = 0){
+	func->addAttribute(0,llvm::Attribute::AlwaysInline);
+	for (unsigned i; i < func->arg_size(); i++){
 		func->getArg(i)->setName(argNames[i]);
 	}
 	llvm::BasicBlock* entryPoint = llvm::BasicBlock::Create(context, "entry", func); 
 	builder.SetInsertPoint(entryPoint); 
 	//function body goes here
-	//builder.CreateRet(); 
+	builder.CreateRet(builder.getInt32(0)); 
 	return func;
 }
 

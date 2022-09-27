@@ -17,6 +17,7 @@ llvm::Function* create_function(std::string name, std::vector<std::string> argNa
 		name,
 		module
 	);
+	func->addAttribute("alwaysinline")
 	for (unsigned i; i < func->arg_size(); i = 0){
 		func->getArg(i)->setName(argNames[i]);
 	}
