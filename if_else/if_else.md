@@ -4,10 +4,10 @@ layout: default
 ---
 # If Else Pattern
 ## Problem
-	With this pattern we want to emit LLVM IR that conditionally branches between two pieces of code.
+With this pattern we want to emit LLVM IR that conditionally branches between two pieces of code.
 	
 ## Use
-	basic block can only execute instructions sequentially. They don't have to ability to conditionally branch. The If Else Pattern allows for these conditional branches.
+basic block can only execute instructions sequentially. They don't have to ability to conditionally branch. The If Else Pattern allows for these conditional branches.
 
 # Context
 This Pattern requires:
@@ -15,8 +15,8 @@ This Pattern requires:
 * basic block Pattern
 
 # Solution
-	To do this we need to create 3 new basic blocks. One for the code to execute if the condition we are branching on is true, one for false, and one last one to put code that goes after the if else blocks.
-	In order for a basic block to be correctly formed, it must consist of non terminating instructions followed by one terminating instruction. This means we can't just let the else block "fall" through to the together block.
+To do this we need to create 3 new basic blocks. One for the code to execute if the condition we are branching on is true, one for false, and one last one to put code that goes after the if else blocks.
+In order for a basic block to be correctly formed, it must consist of non terminating instructions followed by one terminating instruction. This means we can't just let the else block "fall" through to the together block.
 
 ```cpp
 void create_if_else(llvm::Function* func, llvm::Value* cmp) {
