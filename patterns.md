@@ -1,3 +1,7 @@
+---
+title: "patterns"
+layout: default
+---
 # Types of patterns
 
 ## Atomic
