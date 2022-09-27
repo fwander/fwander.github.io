@@ -34,8 +34,8 @@ llvm::BasicBlock* entryPoint = llvm::BasicBlock::Create(context, "entry", <new_f
 builder.SetInsertPoint(entryPoint); 
 ```
 where 
-<new_function> is the name of the variable to store the llvm::Function* in.
-<name> is the name of the function as you want it to appear in LLVM IR
+`new_function` is the name of the variable to store the llvm::Function* in.
+`name` is the name of the function as you want it to appear in LLVM IR
 
 Return is simply:
 
@@ -105,7 +105,7 @@ builder.SetInsertPoint(entryPoint);
 ```
 
 Where
-<arg_types> is an ArrayRef containing the llvm::Type types of the function parameters.
+`arg_types` is an ArrayRef containing the llvm::Type types of the function parameters.
 
 # Variations
 
