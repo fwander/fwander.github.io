@@ -10,9 +10,6 @@ static llvm::Module *module= new llvm::Module("llvm design patterns", context);
 static llvm::IRBuilder<> builder(context);
 
 int main(int argc, char *argv[]) {
-	std::string s;
-	llvm::raw_string_ostream os {s};
-	module->print(os, nullptr);
-	std::cout << os.str() << std::endl;
+	module->print(llvm::outs(), nullptr);
 	return 0;
 }

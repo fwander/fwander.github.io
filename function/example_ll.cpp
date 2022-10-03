@@ -30,9 +30,6 @@ llvm::Function* create_function(std::string name, std::vector<std::string> argNa
 int main(int argc, char *argv[]) {
 	create_function("fib", {"a"}, {builder.getInt32Ty()}, builder.getInt32Ty());
 
-	std::string s;
-	llvm::raw_string_ostream os {s};
-	module->print(os, nullptr);
-	std::cout << os.str() << std::endl;
+	module->print(llvm::outs(), nullptr);
 	return 0;
 }
